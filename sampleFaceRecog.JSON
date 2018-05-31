@@ -1,0 +1,28 @@
+{
+    "images": [
+      {
+        "faces": [
+          {
+            "age": {
+              "min": 59,
+              "max": 62,
+              "score": 0.9214545
+            },
+            "face_location": {
+              "height": 539,
+              "width": 451,
+              "left": 356,
+              "top": 335
+            },
+            "gender": {
+              "gender": "MALE",
+              "score": 0.96021366
+            }
+          }
+        ],
+        "source_url": "https://cdn.discordapp.com/attachments/451094577059987458/451246845256269834/trump.jpg",
+        "resolved_url": "https://cdn.discordapp.com/attachments/451094577059987458/451246845256269834/trump.jpg"
+      }
+    ],
+    "images_processed": 1
+  }
