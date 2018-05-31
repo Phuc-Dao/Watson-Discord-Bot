@@ -8,15 +8,26 @@ let ir = new watson.VisualRecognitionV3({
     iam_apikey: credentials.WatsonKey.iam_apikey
 });
 
+
 function callback(error, responce){
+    let arrObj = [] // array of objects containing class name and score values
+    //constructor for objects
+    let obj = function(className, score ){
+        this.className = className;
+        this.score = score;
+    }
+    
     if(error){
         console.log(error);
     }
     else{
         //console.log(JSON.stringify(responce, null, 2));
         for(items of responce.images[0].classifiers[0].classes){
-            console.log(items.class + ' has a score of ' + items.score);
+            //console.log(items.class + ' has a score of ' + items.score);
+            tempObj = new obj(items.class , items.score);
+            arrObj.push(tempObj);
         }
+        console.log(arrObj);
     }      
 }
 
