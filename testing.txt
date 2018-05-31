@@ -1,0 +1,36 @@
+"classes": [
+              {
+                "class": "President of the United States",
+                "score": 0.581,
+                "type_hierarchy": "/person/President of the United States"
+              },
+              {
+                "class": "person",
+                "score": 0.856
+              },
+              {
+                "class": "official",
+                "score": 0.56,
+                "type_hierarchy": "/person/official"
+              },
+              {
+                "class": "state treasurer",
+                "score": 0.548,
+                "type_hierarchy": "/person/state treasurer"
+              },
+              {
+                "class": "Secretary of State",
+                "score": 0.545,
+                "type_hierarchy": "/person/Secretary of State"
+              },
+              {
+                "class": "elder statesman",
+                "score": 0.514,
+                "type_hierarchy": "/person/elder statesman"
+              },
+              {
+                "class": "adult person",
+                "score": 0.5,
+                "type_hierarchy": "/person/adult person"
+              }
+            ]
