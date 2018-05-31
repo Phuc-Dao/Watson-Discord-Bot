@@ -23,6 +23,7 @@ function callback(error, responce){
     else{
         //console.log(JSON.stringify(responce, null, 2));
         for(items of responce.images[0].classifiers[0].classes){
+            //console.log('Things that I see:')
             //console.log(items.class + ' has a score of ' + items.score);
             tempObj = new obj(items.class , items.score);
             arrObj.push(tempObj);
