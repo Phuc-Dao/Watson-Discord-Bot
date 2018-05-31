@@ -1,0 +1,23 @@
+{
+  "name": "watson-discord-bot",
+  "version": "1.0.0",
+  "description": "This is a discord bot using the watson api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Phuc-Dao/Watson-Discord-Bot.git"
+  },
+  "author": "Phuc Dao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Phuc-Dao/Watson-Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/Phuc-Dao/Watson-Discord-Bot#readme",
+  "dependencies": {
+    "discord.js": "^11.3.2",
+    "watson-developer-cloud": "^3.4.2"
+  }
+}

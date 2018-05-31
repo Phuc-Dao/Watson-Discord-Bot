@@ -1,17 +1,16 @@
-
+//This is the entry point for the npm packages
+//Listing all the dependencies
 var fs = require('fs'); 
 var watson = require('watson-developer-cloud');
 var credentials = require('./credentials');
 
-
-
-//url, apikeym and version thats passed as a parameter to the vr object
 var credentials = {
-  url: credentials.WatsonKey.url,
-  version: credentials.WatsonKey.version,
-  iam_apikey: credentials.WatsonKey.iam_apikey
-}
+    url: credentials.WatsonKey.url,
+    version: credentials.WatsonKey.version,
+    iam_apikey: credentials.WatsonKey.iam_apikey
+  }
 
+//new object for image recognition passing the credentials
 var ir = new watson.VisualRecognitionV3(credentials);
 
 var images_file = fs.createReadStream('./images/pizza.png');
@@ -50,12 +49,14 @@ function detectPeople() {
     if(err){
         console.log(err);
     } else {
-      console.log(response.images[0].faces[0].gender.gender);
-      console.log(response.images[0].faces[0].gender.score);
+      //Parses the JSON for the gender and the score
+      // console.log(response.images[0].faces[0].gender.gender);
+      // console.log(response.images[0].faces[0].gender.score);
+      console.log(JSON.stringify(response, null, 2));
+
 
     }
 });  
 }
 
 detectPeople();
-
