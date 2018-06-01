@@ -8,6 +8,22 @@ let ir = new watson.VisualRecognitionV3({
     iam_apikey: credentials.WatsonKey.iam_apikey
 });
 
+//insertion sort function
+function insertSort(arrObj){
+    for(let i = 0; i < arrObj.length; i++){
+        let temp = arrObj[i];
+        var j = i-1;
+        while(j >= 0 && arrObj[j].score > temp.score){
+            arrObj[j+1] = arrObj[j];
+            j--;
+
+        }
+    arrObj[j+1] = temp;
+
+    }
+    return arrObj;
+}
+
 //check if food group or people group is in the array:  
 function inArr(arr){
     let bool = 0; // if 0 then it is neither person or food if 1 then it is person, if 2 then it is food
@@ -30,10 +46,13 @@ function inArr(arr){
     return bool;
 }
 
+var objective; 
+
 //Call back function that executes (main code)
 function callback(error, responce){
     var arrObj = [] // array of objects containing class name and score values
-    //constructor for objects
+    var greatestScore = 0; //object with the greatest score value
+    var sortedArrObj = [];
     let obj = function(className, score ){
         this.className = className;
         this.score = score;
@@ -47,13 +66,9 @@ function callback(error, responce){
             //console.log('Things that I see:')
             //console.log(items.class + ' has a score of ' + items.score);
             tempObj = new obj(items.class , items.score);
-            arrObj.push(tempObj);
-            
-            
-
+            arrObj.push(tempObj); // array of different objects 
         }
         let num = inArr(arrObj);
-        
         if(num == 1){
             //run function to parse if it is a person
         }
@@ -61,9 +76,9 @@ function callback(error, responce){
             // run person to parse if it is food
         }
         else {
-            //run regular to function of highest classifier
+            objective = insertSort(arrObj);
+            console.log(objective);
         }
-        
     }      
 }
 let detectFaceParam = {
@@ -100,7 +115,7 @@ function imageClassify(link){
 
 
 //ir.detectFaces(detectFaceParam , callback);
-imageClassify('http://schwartzplumbingandheating.com/communities/7/000/001/365/787//images/3591705.png');
+imageClassify('https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?cs=srgb&dl=car-vehicle-luxury-112460.jpg&fm=jpg');
 
 // ir.classify({
 //     url: 'http://schwartzplumbingandheating.com/communities/7/000/001/365/787//images/3591705.png',
@@ -114,3 +129,4 @@ imageClassify('http://schwartzplumbingandheating.com/communities/7/000/001/365/7
 //         console.log(JSON.stringify(responce, null, 2));
 //     }
 // });
+console.log(objective);
