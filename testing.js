@@ -10,23 +10,29 @@ let ir = new watson.VisualRecognitionV3({
 
 //check if food group or people group is in the array:  
 function inArr(arr){
+    let bool = 0; // if 0 then it is neither person or food if 1 then it is person, if 2 then it is food
+
     for(item of arr){
-        //if this is true then it will ... 
-        if(item.class === 'people'){
+        console.log(item.className); 
+        if(item.className == 'person'){
             console.log("This is a person")
+            bool = 1;
          }
-         else if (item.class === 'food'){
+         else if (item.className == 'food'){
              console.log("this is a food")
+            bool = 2;
          }
          else{
+             //do nothing
              console.log("This is neither a person or a food")
          }
     }
+    return bool;
 }
 
 //Call back function that executes (main code)
 function callback(error, responce){
-    let arrObj = [] // array of objects containing class name and score values
+    var arrObj = [] // array of objects containing class name and score values
     //constructor for objects
     let obj = function(className, score ){
         this.className = className;
@@ -43,9 +49,21 @@ function callback(error, responce){
             tempObj = new obj(items.class , items.score);
             arrObj.push(tempObj);
             
+            
 
         }
-        inArr(arrObj);
+        let num = inArr(arrObj);
+        
+        if(num == 1){
+            //run function to parse if it is a person
+        }
+        else if (num == 2 ){
+            // run person to parse if it is food
+        }
+        else {
+            //run regular to function of highest classifier
+        }
+        
     }      
 }
 let detectFaceParam = {
@@ -84,15 +102,15 @@ function imageClassify(link){
 //ir.detectFaces(detectFaceParam , callback);
 imageClassify('http://schwartzplumbingandheating.com/communities/7/000/001/365/787//images/3591705.png');
 
-ir.classify({
-    url: 'http://schwartzplumbingandheating.com/communities/7/000/001/365/787//images/3591705.png',
-    classifier_ids: 'default',
-    threshhold: 0.2
+// ir.classify({
+//     url: 'http://schwartzplumbingandheating.com/communities/7/000/001/365/787//images/3591705.png',
+//     classifier_ids: 'default',
+//     threshhold: 0.2
 
-}, function(error, responce){
-    if(error){
-        console.log(error);
-    }else{
-        console.log(JSON.stringify(responce, null, 2));
-    }
-});
+// }, function(error, responce){
+//     if(error){
+//         console.log(error);
+//     }else{
+//         console.log(JSON.stringify(responce, null, 2));
+//     }
+// });
