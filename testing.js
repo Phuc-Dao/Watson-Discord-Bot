@@ -2,13 +2,16 @@
 var watson = require('watson-developer-cloud');
 var credentials = require('./credentials');
 
+var trumpImageUrl = 'https://cdn.discordapp.com/attachments/451094577059987458/451246845256269834/trump.jpg';
+
+
 var ir = new watson.VisualRecognitionV3({
     url: credentials.WatsonKey.url,
     version: credentials.WatsonKey.version,
     iam_apikey: credentials.WatsonKey.iam_apikey
 });
 
-//insertion sort function
+//insertion sort function that takes an array of objects with className and Score values and sorts it
 function insertSort(arrObj){
     for(let i = 0; i < arrObj.length; i++){
         let temp = arrObj[i];
@@ -24,7 +27,7 @@ function insertSort(arrObj){
     return arrObj;
 }
 
-//check if food group or people group is in the array:  
+//check if food group or people group is in the array, Takes an unsorted array of objects 
 function inArr(arr){
     let bool = 0; // if 0 then it is neither person or food if 1 then it is person, if 2 then it is food
 
@@ -32,27 +35,25 @@ function inArr(arr){
         console.log(item.className); 
         if(item.className == 'person'){
             console.log("This is a person")
-            bool = 1;
+            return 1;
          }
          else if (item.className == 'food'){
              console.log("this is a food")
-            bool = 2;
+            return 2;
          }
          else{
              //do nothing
              console.log("This is neither a person or a food")
          }
     }
-    return bool;
+    return 0;
 }
-
-var objective; 
-
 //Call back function that executes (main code)
 function callback(error, responce){
-    var arrObj = [] // array of objects containing class name and score values
-    var greatestScore = 0; //object with the greatest score value
-    var sortedArrObj = [];
+    var arrObj = [] // array of objects containing class name and score values unsorted
+    //This is the url of the responce from the default classifier
+    let responceURL = responce.images[0].source_url; //get the source url of the responce
+    var sortedArrObj = []; //This is the sorted arrObj
     let obj = function(className, score ){
         this.className = className;
         this.score = score;
@@ -71,7 +72,7 @@ function callback(error, responce){
         let num = inArr(arrObj);
         if(num == 1){
             //code to run if the code that was parsed is person
-            ir.detectFaces()
+            console.log(responceURL);
             
         }
         else if (num == 2 ){
@@ -79,6 +80,7 @@ function callback(error, responce){
         }
         else {
             let sortedObj = insertSort(arrObj);
+            resolve(sortedObj) // resolve that returns the sorted object
 
         }
     }      
@@ -115,11 +117,31 @@ function imageClassify(link){
     }
 }
 
+//function that classifies a face
+function faceClassify(urlLink){
+    let unsortedArrObj = []
+    var imageGender;
+    var imageAgeMax;
+    var imageAgeMin;
+
+    ir.detectFaces({url: urlLink} ,function(error, responce){
+        if(error){
+            console.log(error)
+        }
+        else{
+        
+            imageGender = responce.images[0].faces[0].gender.gender;
+            imageAgeMax = responce.images[0].faces[0].age.max;
+
+            imageAgeMin = responce.images[0].faces[0].age.min;
+            console.log('I see a ' + imageGender + ' between the ages of ' + imageAgeMin + ' and ' + imageAgeMax);
+        }
+    } )
+}
+
 
 //ir.detectFaces(detectFaceParam , callback);
-
-//imageClassify('https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?cs=srgb&dl=car-vehicle-luxury-112460.jpg&fm=jpg');
-
+faceClassify(trumpImageUrl);
 
 //console.log(varglo);
 
@@ -139,25 +161,5 @@ function imageClassify(link){
 //     }
 // });
 
-var testobjj;
 
-let testingPromise = new Promise(function(resolve, reject) {
-    ir.classify({
-        url: 'http://schwartzplumbingandheating.com/communities/7/000/001/365/787//images/3591705.png',
-        classifier_ids: 'default',
-        threshhold: 0.2
-    
-    }, function(error, responce){
-        if(error){
-            console.log(error);
-        }else{
-            testobjj = responce
-            resolve(testobjj);
-        }
-    });
-})
 
-testingPromise.then(function(fromResolve){
-    console.log(fromResolve);
-});
-console.log(testobjj);

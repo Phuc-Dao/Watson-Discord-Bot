@@ -1,0 +1,43 @@
+{
+    "images": [
+      {
+        "classifiers": [
+          {
+            "classifier_id": "default",
+            "name": "default",
+            "classes": [
+              {
+                "class": "cleaning person",
+                "score": 0.912,
+                "type_hierarchy": "/person/workman/laborer/cleaning person"
+              },
+              {
+                "class": "laborer",
+                "score": 0.912
+              },
+              {
+                "class": "workman",
+                "score": 0.912
+              },
+              {
+                "class": "person",
+                "score": 0.912
+              },
+              {
+                "class": "reddish orange color",
+                "score": 0.832
+              },
+              {
+                "class": "blue color",
+                "score": 0.731
+              }
+            ]
+          }
+        ],
+        "source_url": "http://schwartzplumbingandheating.com/communities/7/000/001/365/787//images/3591705.png",
+        "resolved_url": "http://schwartzplumbingandheating.com/communities/7/000/001/365/787//images/3591705.png"
+      }
+    ],
+    "images_processed": 1,
+    "custom_classes": 0
+  }
