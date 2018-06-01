@@ -1,7 +1,7 @@
 //This is the entry point for the npm packages
 //Listing all the dependencies
 var fs = require('fs'); 
-var watson = require('watson-developer-cloud');
+let watson = require('watson-developer-cloud');
 var credentials = require('./credentials');
 
 var credentials = {
@@ -11,7 +11,7 @@ var credentials = {
   }
 
 //new object for image recognition passing the credentials
-var ir = new watson.VisualRecognitionV3(credentials);
+let ir = new watson.VisualRecognitionV3(credentials);
 
 var images_file = fs.createReadStream('./images/pizza.png');
 var classifier_ids = ["food"];
@@ -24,7 +24,8 @@ var params = {
 
 //This function classifies an image 
 module.exports = {
-detectImage: function(){
+  //These are sample export functions that dont really work /////////////////////////////////////////////////
+  detectImage: function(){
   ir.classify(params, function(err, response) {
       if (err)
         console.log(err);
@@ -32,7 +33,8 @@ detectImage: function(){
         console.log(JSON.stringify(response, null, 2));
     });
   },
-detectPeople: function(){
+
+  detectPeople: function(){
   ir.detectFaces({image_file: fs.createReadStream('./images/park.jpg')} , (err, response) => {
     if(err){
         console.log(err);
@@ -40,7 +42,15 @@ detectPeople: function(){
         console.log(JSON.stringify(response, null, 2).images);
     }
  }); 
-}
+},
+////////////////////////////////These are sample export functions that dont really work /////////////////////////
+//This is a function that generically classifies the image url. Takes the image URL as a paramter
+genericClassify: function(imageURL){
+
+
+},
+
+
 }
 
 //This takes the url of an image and passes it through the function
