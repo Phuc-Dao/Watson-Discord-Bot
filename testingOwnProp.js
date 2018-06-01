@@ -1,16 +1,14 @@
-var array = [9, 2, 5, 6, 4, 3, 7, 10, 1, 8];
-
-function insertionSort(array) {
-  for(var i = 0; i < array.length; i++) {
-    var temp = array[i];
-    var j = i - 1;
-    while (j >= 0 && array[j] > temp) {
-      array[j + 1] = array[j];
-      j--;
-    }
-    array[j + 1] = temp;
+function doSomething() {
+    return new Promise((resolve, reject) => {
+      console.log("It is done.");
+      // Succeed half of the time.
+      if (Math.random() > .5) {
+        resolve("SUCCESS")
+      } else {
+        reject("FAILURE")
+      }
+    })
   }
-  return array;
-}
-
-console.log(insertionSort(array));
+  
+  const promise = doSomething(); 
+  promise.then(successCallback, failureCallback);

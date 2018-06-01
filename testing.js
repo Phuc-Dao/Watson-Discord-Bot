@@ -2,7 +2,7 @@
 var watson = require('watson-developer-cloud');
 var credentials = require('./credentials');
 
-let ir = new watson.VisualRecognitionV3({
+var ir = new watson.VisualRecognitionV3({
     url: credentials.WatsonKey.url,
     version: credentials.WatsonKey.version,
     iam_apikey: credentials.WatsonKey.iam_apikey
@@ -70,14 +70,16 @@ function callback(error, responce){
         }
         let num = inArr(arrObj);
         if(num == 1){
-            //run function to parse if it is a person
+            //code to run if the code that was parsed is person
+            ir.detectFaces()
+            
         }
         else if (num == 2 ){
             // run person to parse if it is food
         }
         else {
-            objective = insertSort(arrObj);
-            console.log(objective);
+            let sortedObj = insertSort(arrObj);
+
         }
     }      
 }
@@ -115,7 +117,14 @@ function imageClassify(link){
 
 
 //ir.detectFaces(detectFaceParam , callback);
-imageClassify('https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?cs=srgb&dl=car-vehicle-luxury-112460.jpg&fm=jpg');
+
+//imageClassify('https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?cs=srgb&dl=car-vehicle-luxury-112460.jpg&fm=jpg');
+
+
+//console.log(varglo);
+
+//console.log(varglo);
+
 
 // ir.classify({
 //     url: 'http://schwartzplumbingandheating.com/communities/7/000/001/365/787//images/3591705.png',
@@ -126,7 +135,29 @@ imageClassify('https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?
 //     if(error){
 //         console.log(error);
 //     }else{
-//         console.log(JSON.stringify(responce, null, 2));
+//         return new Promise (console.log(JSON.stringify(responce, null, 2)));
 //     }
 // });
-console.log(objective);
+
+var testobjj;
+
+let testingPromise = new Promise(function(resolve, reject) {
+    ir.classify({
+        url: 'http://schwartzplumbingandheating.com/communities/7/000/001/365/787//images/3591705.png',
+        classifier_ids: 'default',
+        threshhold: 0.2
+    
+    }, function(error, responce){
+        if(error){
+            console.log(error);
+        }else{
+            testobjj = responce
+            resolve(testobjj);
+        }
+    });
+})
+
+testingPromise.then(function(fromResolve){
+    console.log(fromResolve);
+});
+console.log(testobjj);
