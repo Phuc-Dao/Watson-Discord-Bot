@@ -1,7 +1,7 @@
 //This is the entry point for the npm packages
 //Listing all the dependencies
 var fs = require('fs'); 
-let watson = require('watson-developer-cloud');
+var watson = require('watson-developer-cloud');
 var credentials = require('./credentials');
 
 var credentials = {
@@ -11,7 +11,7 @@ var credentials = {
   }
 
 //new object for image recognition passing the credentials
-let ir = new watson.VisualRecognitionV3(credentials);
+var ir = new watson.VisualRecognitionV3(credentials);
 
 var images_file = fs.createReadStream('./images/pizza.png');
 var classifier_ids = ["food"];
@@ -69,4 +69,12 @@ function detectPeople() {
 });  
 }
 
-detectPeople();
+ir.classify(params , function(error, response){
+if(error){
+  console.log(error)
+}else{
+  console.log(JSON.stringify(response, null, 2));
+}
+})
+
+

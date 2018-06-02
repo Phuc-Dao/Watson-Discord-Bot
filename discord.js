@@ -41,6 +41,9 @@ function inArr(arr){
     return 0; // returns 1 if it is a person , returns 2 if it is food, returns 0 if it is a generic
 }
 
+function convertPercentage(a){
+    return(a * 100);
+}
 
 //////////////////////////List of all the utility functions that are being used///////////////////////////////////////////////////////
 
@@ -69,33 +72,81 @@ client.on('message', msg => {
         //generic classify -> returns an object
 
         //first promsie that returns sorted object of the generic classifier
-        let firstPromise = new Promise(function(resolve, reject){
+            // This is the generic classify
             ir.classify({url: msg.attachments.array()[0].url}, function(error, response){
                 if(error){
                     console.log(error)
                 }else{
                     //resolve(responce.image[0].classifers)
                     //let unsortedArr = response.images[0].classifiers[0].classes;
-                    let val = inArr(response.images[0].classifiers[0].classes);
+                    let val = inArr(response.images[0].classifiers[0].classes); // checks if food/ person is here
+                    var sortedArr = insertionSort(response.images[0].classifiers[0].classes);
+
                     console.log(val);
+                        
+                    
                         if(val == 1){
-                        //If it is a person then it will run the face detection classifier
+                        //If it is a person then it will run the face detection classifier.
+
+                        ir.detectFaces({url: msg.attachments.array()[0].url}, function(error , response){
+                            if(error){
+                                console.log(error);
+                            }
+                           else{
+                                let minAge = response.images[0].faces[0].age.min;
+                                let maxAge = response.images[0].faces[0].age.max;
+                                let gender = response.images[0].faces[0].gender.gender;
+                                let botMessage = 'I see a ' + gender + ' between the ages of ' + minAge + ' and ' + maxAge;
+                                msg.reply(botMessage)
+                                msg.reply('I also see: ')
+                                //for loop that prints a reply for every 
+                                for(i = 0; i < sortedArr.length - 1; i++){
+                                    msg.reply(sortedArr[i].class + ' ' + convertPercentage(sortedArr[i].score).toFixed(2) + ' %');
+                                }
+
+                                
+
+                            }
+                        });
                             
                         }
                         else if(val == 2){
                         //if it is food then it will run the food detection classifier
+                        ir.classify({url: msg.attachments.array()[0].url, classifier_ids: 'food'}, function(error, response){
+                            if(error){
+                                console.log(error);
+                            }
+                            else{
+                            let dishNameSorted = insertionSort(response.images[0].classifiers[0].classes);
+                            let dishNameGreatest = dishNameSorted[dishNameSorted.length-1].class; // returns the class of the greatest object
+                            msg.reply('I see ' + dishNameGreatest );
+                            msg.reply('I also see: ');
+                            for(val = 0; val < sortedArr.length-1; val++){
+                                msg.reply(sortedArr[val].class + ' ' + convertPercentage(sortedArr[i].score).toFixed(2) + ' %');
+                            }
+
+                                
+                    
+
+                            }
+                        })
+
 
                         }
                         else{
                         //if it is neither than it will print out the generic person classifier
-                        let sortedArr = insertionSort(response.images[0].classifiers[0].classes);
-                        botMessage = 'I think I see ' + sortedArr[sortedArr.length - 1].class;
-                        console.log(botMessage); //replace this with messages that discord will send to the channel
-                            
+                        botMessage = 'I see ' + sortedArr[sortedArr.length - 1].class;
+                        //console.log(botMessage); //replace this with messages that discord will send to the channel
+                        msg.reply(botMessage + ': ');
+                        msg.reply('Other things that I see: ');
+
+                        for(i = 0; i < sortedArr.length - 1; i++){
+                            msg.reply(sortedArr[i].class + ' ' + convertPercentage(sortedArr[i].score).toFixed(2) + ' %');
+                        }
                         }
                 }
             })
-        })
+        
 
 
         
