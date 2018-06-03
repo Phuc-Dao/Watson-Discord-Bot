@@ -2,7 +2,7 @@
   "name": "watson-discord-bot",
   "version": "1.0.0",
   "description": "This is a discord bot using the watson api",
-  "main": "index.js",
+  "main": "discord.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

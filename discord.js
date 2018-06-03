@@ -122,7 +122,7 @@ client.on('message', msg => {
                             msg.reply('I see ' + dishNameGreatest );
                             msg.reply('I also see: ');
                             for(val = 0; val < sortedArr.length-1; val++){
-                                msg.reply(sortedArr[val].class + ' ' + convertPercentage(sortedArr[i].score).toFixed(2) + ' %');
+                                console.log(sortedArr[val].class + ' ' + convertPercentage(sortedArr[val].score).toFixed(2) + ' %');
                             }
 
                                 
@@ -145,14 +145,9 @@ client.on('message', msg => {
                         }
                         }
                 }
-            })
-        
+            }
+            )}
 
-
-        
-
-
-    }
     else{
         var obj; 
         //runs if it is not an image //Promise the generic classify and then resolve the variable to store the arr OBJ
