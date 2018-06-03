@@ -20,7 +20,6 @@ for(let i = 0; i < arrObj.length; i++){
     while(j >= 0 && arrObj[j].score > temp.score){
         arrObj[j+1] = arrObj[j];
         j--;
-
     }
 arrObj[j+1] = temp;
 
@@ -51,6 +50,18 @@ function convertPercentage(a){
 client.on('ready' , () => {
     console.log("the bot has stated"); //prints this to the console when the client is ready
 });
+
+client.on("guildCreate", guild => {
+    // This event triggers when the bot joins a guild.
+    console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
+    client.user.setActivity(`Serving ${client.guilds.size} servers`);
+  });
+  
+  client.on("guildDelete", guild => {
+    // this event triggers when the bot is removed from a guild.
+    console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
+    client.user.setActivity(`Serving ${client.guilds.size} servers`);
+  });
 
 //Client on listens for user input
 client.on('message', msg => {
@@ -125,13 +136,8 @@ client.on('message', msg => {
                                 console.log(sortedArr[val].class + ' ' + convertPercentage(sortedArr[val].score).toFixed(2) + ' %');
                             }
 
-                                
-                    
-
                             }
                         })
-
-
                         }
                         else{
                         //if it is neither than it will print out the generic person classifier
@@ -152,8 +158,38 @@ client.on('message', msg => {
         var obj; 
         //runs if it is not an image //Promise the generic classify and then resolve the variable to store the arr OBJ
         msg.reply('I can only recognize images, please enter an image');
+
+   // Here we separate our "command" name, and our "arguments" for the command. 
+  // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
+  // command = say
+  // args = ["Is", "this", "the", "real", "life?"]
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+  
+
+
+  if(command === "say") {
+    // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
+    // To get the "message" itself we join the `args` back into a string with spaces: 
+    const sayMessage = args.join(" ");
+    // Then we delete the command message (sneaky, right?). The catch just ignores the error with a cute smiley thing.
+    message.delete().catch(O_o=>{}); 
+    // And we get the bot to say the thing: 
+    message.channel.send(sayMessage);
+  }
+
+  if(command === "kick") {
+    // This command must be limited to mods and admins. In this example we just hardcode the role names.
+    // Please read on Array.some() to understand this bit: 
+    // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/some?
+    if(!message.member.roles.some(r=>["Administrator", "Moderator"].includes(r.name)) ){
+      return message.reply("Sorry, you don't have permissions to use this!");
+  
     }
-});
-   client.login(credentials.DiscordKey.token);
+    }
+   }
+  
 
 
+}) 
+client.login(credentials.DiscordKey.token);
