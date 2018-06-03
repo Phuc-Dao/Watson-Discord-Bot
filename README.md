@@ -1,2 +1,3 @@
 # Watson-Discord-Bot
-This is a discord bot using the discord api and the watson api. Implamented using node.js
+Simple bot for discord that uses the Watson Api for image recognition and the discord api to interact with the chat room.
+
