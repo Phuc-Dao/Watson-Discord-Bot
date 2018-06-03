@@ -47,7 +47,6 @@ function convertPercentage(a) {
     return (a * 100);
 }
 
-
 client.on('ready', () => {
     console.log("the bot has stated"); //prints this to the console when the client is ready
 });
