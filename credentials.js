@@ -7,6 +7,4 @@ module.exports = {
      DiscordKey: {
         token: "NDUxMDkwMDQ1ODQ4MjU2NTEy.De8xOA.HSvRsiJWVmrzNdvdq2BKCPwG084",
      }
-
-
 }
