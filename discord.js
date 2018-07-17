@@ -23,7 +23,6 @@ function insertionSort(arrObj) {
             j--;
         }
         arrObj[j + 1] = temp;
-
     }
     return arrObj;
 }
