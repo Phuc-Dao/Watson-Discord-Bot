@@ -12,3 +12,30 @@ npm start
 
 ```
 
+### To deploy this project to heroku see steps below:
+
+You will need to install the [heroku-cli](https://devcenter.heroku.com/articles/heroku-cli)
+
+```bash
+# Heroku-cli (paste link in browser)
+https://devcenter.heroku.com/articles/heroku-cli
+```
+
+Afer installing heroku-cli run the following commands in terminal
+
+```bash
+# login locally
+heroku login
+```
+
+You will be prompted to enter your email and password which is the same the email and password used when you sign up for Heroku
+
+```bash
+# create your app
+heroku create
+
+# set enviroment vareiables
+heroku config:set DB_URL=YOUR_OWN_DB_URI
+heroku config:set TOKEN_SECRET=YOUR_OWN_SECRET
+```
+
