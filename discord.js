@@ -23,7 +23,6 @@ function insertionSort(arrObj) {
             j--;
         }
         arrObj[j + 1] = temp;
-
     }
     return arrObj;
 }
@@ -47,7 +46,10 @@ function convertPercentage(a) {
     return (a * 100);
 }
 
+<<<<<<< HEAD
 //This prints to the console when the clientstarts
+=======
+>>>>>>> 1cfaa75fd64c7d3847c6a799f3c19a56ce463b35
 client.on('ready', () => {
     console.log("the bot has stated"); 
 });
