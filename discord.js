@@ -47,9 +47,9 @@ function convertPercentage(a) {
     return (a * 100);
 }
 
-
+//This prints to the console when the clientstarts
 client.on('ready', () => {
-    console.log("the bot has stated"); //prints this to the console when the client is ready
+    console.log("the bot has stated"); 
 });
 
 //event that triggers when the bot joins a guilde
