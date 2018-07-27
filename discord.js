@@ -3,6 +3,7 @@ var discord = require('discord.js');
 var credentials = require('./credentials');
 var watson = require('watson-developer-cloud');
 
+
 //object containing credentials such as api key and tokens
 var credential = {
     url: credentials.WatsonKey.url,
@@ -46,10 +47,7 @@ function convertPercentage(a) {
     return (a * 100);
 }
 
-<<<<<<< HEAD
 //This prints to the console when the clientstarts
-=======
->>>>>>> 1cfaa75fd64c7d3847c6a799f3c19a56ce463b35
 client.on('ready', () => {
     console.log("the bot has stated"); 
 });
@@ -68,7 +66,6 @@ client.on("guildDelete", guild => {
 
 //Client on listens for user input
 client.on('message', msg => {
-
     //Try catch statement to check if it is an image. 
     try {
         image = msg.attachments.array()[0].url

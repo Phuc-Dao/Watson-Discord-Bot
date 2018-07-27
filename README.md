@@ -39,3 +39,7 @@ heroku config:set DB_URL=YOUR_OWN_DB_URI
 heroku config:set TOKEN_SECRET=YOUR_OWN_SECRET
 ```
 
+#Run npm install to install all the packags
+
+1. Documentations for reading Discord.js use https://discord.js.org/#/
+1. Go to disc
