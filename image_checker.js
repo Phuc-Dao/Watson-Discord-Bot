@@ -17,14 +17,26 @@ module.exports = {
         try {
             const image = msg.attachments.array()[0].url; //json object
             console.log(image)
-            //parameters for the image recognition bot. Takes the URL from the discord msg ovject
-            const params = {
+            ///3 Different parameters for the image classification function. One for general classification, one for food classification,
+            //and one for people classification
+            const params_gen = {
                 url: msg.attachments.array()[0].url,
                 classifier_ids: "default",
-            }
-            
+            };
+           
+           const params_food = {
+                url: msg.attachments.array()[0].url,
+               classifier_ids: "food"
+           } 
+
+           const params_person = {
+            url: msg.attachments.array()[0].url,
+            classifier_ids: "person" 
+           }
+
+
             //classifies the url with the default classifier
-            ir.classify(params, (err, res) => {
+            ir.classify(params_gen, (err, res) => {
                 if(err){
                     console.log(err)
                 }else{
@@ -32,8 +44,15 @@ module.exports = {
                     let classArr = res.images[0].classifiers[0].classes //This is an array of objects, of classes.
                     for(items of classArr){
                         if(items.class == 'food'){
-                            console.log("The item is 1")
-                            return 1;
+                            //If the item is a food then run second image classifier
+                            ir.classify(params_food, (err, res) => {
+                                if(err){
+                                    console.log(err)
+                                }
+                                else{
+                                    console.log(res)
+                                }
+                            });
                         }
                         else if(items.class == 'person'){
                             console.log("The item is 2")
