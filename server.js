@@ -23,16 +23,16 @@ client.on('message' , msg =>{
         
         //If branch that checks if the image is 1 or 2
         if(image === 1){
-
+            //classify image based on fruit
         }
         else if(image === 2){
-
+            //classify image based on person and print the results
         }
         else if (image === false){
-
+            //run watson assistant and print out the text
         }
         else{
-            
+            //print out the classified image
         }
 
     }

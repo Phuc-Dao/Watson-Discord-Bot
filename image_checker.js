@@ -50,15 +50,27 @@ module.exports = {
                                     console.log(err)
                                 }
                                 else{
-                                    console.log(res)
+                                    console.log("It is Food!")
+                                    image_food = res.images[0].classifiers[0].classes
+                                    return(image_food) //FIXME: Return this as an object
                                 }
                             });
                         }
                         else if(items.class == 'person'){
-                            console.log("The item is 2")
-                            return 2;
+                            ir.classify(params_person , (err, res) =>{
+                                if(err){
+                                    console.log(err)
+                                }
+                                else{
+                                    console.log("It is a person!")
+                                    let image_person = res.images[0].classifiers[0].classes;
+                                    console.log(image_person)
+                                    return image_person; //returns the object
+                                }
+                            })
                         }
                     }
+                    console.log("IT is a general Image");
                     return classArr; //Returns the object of classes if it is a general image
                 }
             });
