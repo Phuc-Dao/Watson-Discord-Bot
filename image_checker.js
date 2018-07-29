@@ -18,35 +18,79 @@ module.exports = {
             //if msg doesnt have a url then this object will not exist and therefore return an error
             const image = msg.attachments.array()[0].url; //json object
             console.log(image)
-            ///3 Different parameters for the image classification function. One for general classification, one for food classification,
-            //and one for people classification
+            
+            //parameters for the general classification 
             const params_gen = {
                 url: msg.attachments.array()[0].url,
                 classifier_ids: "default",
             };
            
+            //paramters for the food classification
            const params_food = {
                 url: msg.attachments.array()[0].url,
                classifier_ids: "food"
            } 
 
+           //parameters for the person classification
            const params_person = {
             url: msg.attachments.array()[0].url,
             classifier_ids: "person" 
            }
 
+           //This is the json object of the classified image getting returned in the end
            const classify_object;
 
-           //This function returns a promise that will classify the image
+           //wraps the general image classification within a promise
            function gen_classify(){
                 return new Promise(
                     (res, rej) => {
                         ir.classify(params_gen , (err, res) => {   
-                            classify_object = res.images[0].classifiers[0].classes;
+                            if(err){
+                                console.log(err)
+                            }
+                            else{
+                                classify_object = res.images[0].classifiers[0].classes;
+                            }
                         })
                     }
                 );
            }
+           
+           //Wraps the food classify function within a promise
+           function food_classify(){
+               return new Promise(
+                   (res, rej) => {
+                       //calls the watson api and classify it using the food parameters
+                        ir.classify(params_food, 
+                            (err, res) => {
+                                if(err){
+                                    console.log(err)
+                                }else {
+                                    classify_object = res.images[0].classifiers[0].classes;
+                                }
+                            });
+                   }
+                );
+           };
+
+           //wraps the person classify function within a promise
+           function person_classify(){
+               return new Promise(
+                   (res , rej) => {
+                       //Calls the watson api and classify image using the person paramter
+                       ir.classify(params_person, 
+                            (err, res) => {
+                                if(err){
+                                    console.log(err)
+                                }
+                                else{
+                                    classify_object = res.images[0].classifiers[0].classes;
+                                }
+                            });
+                   }
+               );
+           }
+
 
             //classifies the url with the default classifier
             ir.classify(params_gen, (err, res) => {
