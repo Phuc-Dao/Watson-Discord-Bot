@@ -15,6 +15,7 @@ module.exports = {
     //Function that checks if it is an image and returns the image. If it is not an image then it returns false
     isImage : (msg) => {
         try {
+            //if msg doesnt have a url then this object will not exist and therefore return an error
             const image = msg.attachments.array()[0].url; //json object
             console.log(image)
             ///3 Different parameters for the image classification function. One for general classification, one for food classification,
@@ -34,6 +35,18 @@ module.exports = {
             classifier_ids: "person" 
            }
 
+           const classify_object;
+
+           //This function returns a promise that will classify the image
+           function gen_classify(){
+                return new Promise(
+                    (res, rej) => {
+                        ir.classify(params_gen , (err, res) => {   
+                            classify_object = res.images[0].classifiers[0].classes;
+                        })
+                    }
+                );
+           }
 
             //classifies the url with the default classifier
             ir.classify(params_gen, (err, res) => {
@@ -76,6 +89,7 @@ module.exports = {
             });
         }
         catch (TypeError) {
+            //returns false if the top code fails which means it is a string
             return false;
         }
     },
