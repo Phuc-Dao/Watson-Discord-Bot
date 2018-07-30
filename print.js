@@ -1,7 +1,7 @@
 var credentials = require('./credentials');
 var watson = require('watson-developer-cloud');
 
-var image_url = 'https://vignette.wikia.nocookie.net/dragonballfanon/images/7/70/Random.png/revision/latest?cb=20161221030547'
+var image_url = 'https://media4.s-nbcnews.com/j/MSNBC/Components/Video/201802/tdy_pop_klg_steak_180215_1920x1080.today-inline-vid-featured-desktop.jpg'
 
 //object containing credentials such as api key and tokens
 var credential = {
@@ -67,8 +67,18 @@ function class2(){
         });
     });
 }
+var class_obj;
+
+var counter;
+
+ir.classify(ir_params, 
+    (err, res) => {
+        //returns an array of objects with paramters classes and score
+        item = res.images[0].classifiers[0].classes; 
+        for(items of item){
+            console.log(items.class)
+        }
+    } )
 
 
 
-
-class1().then(class2());
