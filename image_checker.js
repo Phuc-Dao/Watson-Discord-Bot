@@ -91,46 +91,49 @@ module.exports = {
                );
            }
 
+        
+           //insert conditional promises here
+           gen_classify().then()
 
             //classifies the url with the default classifier
-            ir.classify(params_gen, (err, res) => {
-                if(err){
-                    console.log(err)
-                }else{
-                    //print out the image object
-                    let classArr = res.images[0].classifiers[0].classes //This is an array of objects, of classes.
-                    for(items of classArr){
-                        if(items.class == 'food'){
-                            //If the item is a food then run second image classifier
-                            ir.classify(params_food, (err, res) => {
-                                if(err){
-                                    console.log(err)
-                                }
-                                else{
-                                    console.log("It is Food!")
-                                    image_food = res.images[0].classifiers[0].classes
-                                    return(image_food) //FIXME: Return this as an object
-                                }
-                            });
-                        }
-                        else if(items.class == 'person'){
-                            ir.classify(params_person , (err, res) =>{
-                                if(err){
-                                    console.log(err)
-                                }
-                                else{
-                                    console.log("It is a person!")
-                                    let image_person = res.images[0].classifiers[0].classes;
-                                    console.log(image_person)
-                                    return image_person; //returns the object
-                                }
-                            })
-                        }
-                    }
-                    console.log("IT is a general Image");
-                    return classArr; //Returns the object of classes if it is a general image
-                }
-            });
+            // ir.classify(params_gen, (err, res) => {
+            //     if(err){
+            //         console.log(err)
+            //     }else{
+            //         //print out the image object
+            //         let classArr = res.images[0].classifiers[0].classes //This is an array of objects, of classes.
+            //         for(items of classArr){
+            //             if(items.class == 'food'){
+            //                 //If the item is a food then run second image classifier
+            //                 ir.classify(params_food, (err, res) => {
+            //                     if(err){
+            //                         console.log(err)
+            //                     }
+            //                     else{
+            //                         console.log("It is Food!")
+            //                         image_food = res.images[0].classifiers[0].classes
+            //                         return(image_food) //FIXME: Return this as an object
+            //                     }
+            //                 });
+            //             }
+            //             else if(items.class == 'person'){
+            //                 ir.classify(params_person , (err, res) =>{
+            //                     if(err){
+            //                         console.log(err)
+            //                     }
+            //                     else{
+            //                         console.log("It is a person!")
+            //                         let image_person = res.images[0].classifiers[0].classes;
+            //                         console.log(image_person)
+            //                         return image_person; //returns the object
+            //                     }
+            //                 })
+            //             }
+            //         }
+            //         console.log("IT is a general Image");
+            //         return classArr; //Returns the object of classes if it is a general image
+            //     }
+            // });
         }
         catch (TypeError) {
             //returns false if the top code fails which means it is a string
