@@ -38,7 +38,7 @@ module.exports = {
            }
 
            //This is the json object of the classified image getting returned in the end
-           const classify_object;
+           var classify_object = null;
 
            //wraps the general image classification within a promise
            function gen_classify(){
@@ -91,9 +91,26 @@ module.exports = {
                );
            }
 
-        
+           //testing promises
+           let prom1 = new Promise(
+               (res, rej) => {
+                ir.classify(params_gen , (err, res) => {   
+                    if(err){
+                        console.log(err)
+                    }
+                    else{
+                        classify_object = res.images[0].classifiers[0].classes;
+                    }
+                })
+               }
+           );
+
+
            //insert conditional promises here
-           gen_classify().then()
+           gen_classify().then(food_classify);
+           console.log(classify_object);
+
+
 
             //classifies the url with the default classifier
             // ir.classify(params_gen, (err, res) => {

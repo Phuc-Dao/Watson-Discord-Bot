@@ -20,21 +20,8 @@ client.on('message' , msg =>{
         //checks the image returns object of classes if it is general image. Returns 1 if it is fruit. Returns 2 if it is a person. 
         //if returns false then it is not an image
         const image = image_check.isImage(msg); //image_check is a function requied from another file
+        console.log(image);
         
-        //If branch that checks if the image is 1 or 2
-        if(image === 1){
-            //classify image based on fruit
-        }
-        else if(image === 2){
-            //classify image based on person and print the results
-        }
-        else if (image === false){
-            //run watson assistant and print out the text
-        }
-        else{
-            //print out the classified image
-        }
-
     }
 });
 
