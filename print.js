@@ -1,7 +1,8 @@
 var credentials = require('./credentials');
 var watson = require('watson-developer-cloud');
 
-var image_url = 'https://media4.s-nbcnews.com/j/MSNBC/Components/Video/201802/tdy_pop_klg_steak_180215_1920x1080.today-inline-vid-featured-desktop.jpg'
+//var image_url = 'https://media4.s-nbcnews.com/j/MSNBC/Components/Video/201802/tdy_pop_klg_steak_180215_1920x1080.today-inline-vid-featured-desktop.jpg'
+var image_url = "https://www.kitchentreaty.com/wp-content/uploads/2013/04/fluffy-banana-pancakes-2.jpg";
 
 //object containing credentials such as api key and tokens
 var credential = {
@@ -92,7 +93,10 @@ let testprom = new Promise(function(resolve , reject){
         else{
             item = res;
             console.log("First this code gets executed");
-            console.log(item.images[0].classifiers[0].classes[0])
+            item2 = item.images[0].classifiers[0].classes
+            for(val of item2){
+                console.log(val.class)
+            }
 
         };
         resolve(item)
@@ -100,40 +104,7 @@ let testprom = new Promise(function(resolve , reject){
     });
 });
 
-function callback(value){
-    var classified;
-    counter;
-    for( item of value.images[0].classifiers[0].classes){
-        if(item.class == 'food'){
-            counter = 1;
-        }
-        else if( item.class == "person"){
-            counter = 2;
-        }
-        else{
-            counter = 0;
-        }
-    }
-
-    //if counter is 1 then it is food
-    if(counter == 1){
-        ir.classify(ir_param2 , (err, res) => {
-            if(err){
-                console.log(err)
-            }
-            else{
-                classified = res;
-                resolve(clasified)
-            }
-        })
-    }
-    else{
-        resolve(value)
-    }
-}
-
-//This is test 1
-testprom.then(function(value){
+function cback(){
 
     var counter;
     for( item of value.images[0].classifiers[0].classes){
@@ -164,4 +135,41 @@ testprom.then(function(value){
        return itemclasser;
 
 }
-}).catch(err => console.log(err))
+}
+
+
+//This is test 1
+// testprom.then(function(value){
+
+//     var counter;
+//     for( item of value.images[0].classifiers[0].classes){
+//         if(item.class == 'food'){
+//             counter = 1;
+//         }
+//         else if( item.class == "person"){
+//             counter = 2;
+//         }
+//         else{
+//             counter = 0;
+//         }
+//     }
+//     console.log("Then this code gets executed")
+//     var itemclasser;
+//     if(counter == 0){
+        
+//         ir.classify(ir_prams2 , (err, res) => {
+//             if(err){
+//                 console.log(err)
+//             }
+//             else{
+//                 itemclasser = res;
+//                 console.log(itemclasser.images[0].classifiers[0].classes)
+                
+//             }
+//         })
+//        return itemclasser;
+
+// }
+// }).catch(err => console.log(err))
+
+testprom.then(cback(value)).catch(err => console.log(err))

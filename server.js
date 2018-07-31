@@ -6,7 +6,7 @@ const token = credentials.DiscordKey.token
 //Creates a new discord client object
 const client = new Discord.Client();
 
-const image_check = require('./image_checker')
+const image_classify = require('./image_classify')
 
 client.on('ready', () => {
     console.log("The bot is ready")
@@ -17,11 +17,17 @@ client.on('message' , msg =>{
     //If the message is from the bot then do nothing
     if(msg.author.bot) return;
     else{
-        //checks the image returns object of classes if it is general image. Returns 1 if it is fruit. Returns 2 if it is a person. 
-        //if returns false then it is not an image
-        const image = image_check.isImage(msg); //image_check is a function requied from another file
-        console.log(image);
-        
+        //checks the image and returns a promise. 
+        const image = image_classify.isImage(msg); //image_check is a function requied from another file
+        image.then(
+            (value) => {
+                //prints out every item from the raw classifer
+            //    for(item of value.images[0].classifiers[0].classes){
+            //        console.log(item.class)
+            //    }
+                console.log(value);
+        });
+
     }
 });
 
