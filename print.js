@@ -12,12 +12,12 @@ var credential = {
 
 var ir = new watson.VisualRecognitionV3(credential);
 
-ir_params = {
+var ir_params = {
     url: image_url,
     classifier_ids: "default" 
 }
 
-ir_prams2 = {
+var ir_prams2 = {
     url: image_url,
     classifier_ids: "food"
 }
@@ -71,14 +71,97 @@ var class_obj;
 
 var counter;
 
-ir.classify(ir_params, 
-    (err, res) => {
-        //returns an array of objects with paramters classes and score
-        item = res.images[0].classifiers[0].classes; 
-        for(items of item){
-            console.log(items.class)
+//testing the classify object
+// ir.classify(ir_params, 
+//     (err, res) => {
+//         //returns an array of objects with paramters classes and score
+//         item = res.images[0].classifiers[0].classes; 
+//         for(items of item){
+//             console.log(items.class)
+//         }
+//     } );
+
+
+let testprom = new Promise(function(resolve , reject){
+    //execute code
+    ir.classify(ir_params , (err , res) => {
+        var item
+        if(err){
+            reject(err)
         }
-    } )
+        else{
+            item = res;
+            console.log("First this code gets executed");
+            console.log(item.images[0].classifiers[0].classes[0])
 
+        };
+        resolve(item)
 
+    });
+});
 
+function callback(value){
+    var classified;
+    counter;
+    for( item of value.images[0].classifiers[0].classes){
+        if(item.class == 'food'){
+            counter = 1;
+        }
+        else if( item.class == "person"){
+            counter = 2;
+        }
+        else{
+            counter = 0;
+        }
+    }
+
+    //if counter is 1 then it is food
+    if(counter == 1){
+        ir.classify(ir_param2 , (err, res) => {
+            if(err){
+                console.log(err)
+            }
+            else{
+                classified = res;
+                resolve(clasified)
+            }
+        })
+    }
+    else{
+        resolve(value)
+    }
+}
+
+//This is test 1
+testprom.then(function(value){
+
+    var counter;
+    for( item of value.images[0].classifiers[0].classes){
+        if(item.class == 'food'){
+            counter = 1;
+        }
+        else if( item.class == "person"){
+            counter = 2;
+        }
+        else{
+            counter = 0;
+        }
+    }
+    console.log("Then this code gets executed")
+    var itemclasser;
+    if(counter == 0){
+        
+        ir.classify(ir_prams2 , (err, res) => {
+            if(err){
+                console.log(err)
+            }
+            else{
+                itemclasser = res;
+                console.log(itemclasser.images[0].classifiers[0].classes)
+                
+            }
+        })
+       return itemclasser;
+
+}
+}).catch(err => console.log(err))
