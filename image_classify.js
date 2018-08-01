@@ -91,10 +91,11 @@ module.exports = {
            return(promise);
         }
         catch (TypeError) {
-            //returns false if the top code fails which means it is a string
+            //returns new promise with value of the text from the message
+            console.log("Type Error caught")
             return (new Promise(
                 (resolve, reject) => {
-                   resolve(msg); 
+                   resolve(msg.content); 
                 }))
         }
     }
