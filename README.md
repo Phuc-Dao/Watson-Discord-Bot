@@ -1,4 +1,5 @@
-# Watson-Discord-Bot
+ear
+ Watson-Discord-Bot
 ---
 Chat bot for the Discord chat application. Uses the Watson API by IBM to classify and recognize images. The back end is handled using Node.js
 ---
@@ -21,7 +22,7 @@ You will need to install the [heroku-cli](https://devcenter.heroku.com/articles/
 https://devcenter.heroku.com/articles/heroku-cli
 ```
 
-Afer installing heroku-cli run the following commands in terminal
+Afer installing heroku-cli run the following commands in terminal and run the following command
 
 ```bash
 # login locally
